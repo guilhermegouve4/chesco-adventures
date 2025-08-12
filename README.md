@@ -14,7 +14,7 @@ Este é um jogo de escolhas onde sua sagacidade é a única arma. Prepare-se para e
 ---
 ### Ficha Técnica
 * **Motor:** C
-* **Desenvolvedor:** [Seu nome ou Nickname]
+* **Desenvolvedor:** [guilhermegouve4]
 * **Versão:** 1.0
 
 ---
