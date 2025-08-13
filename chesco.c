@@ -1,19 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <time.h> // BIBLIOTECA RESPONSÁVEL PELA ALEATORIEDADE
+
+int gameIntro();
+int footPrintChoice();
+void clearingChoice();
+void anxietyFinal();
+void followRiver(int *heroLife);
+void battleData(int *heroLife, int *enemyLife);
+int endBattle(int *heroLife);
 
 int main() {
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "Portuguese"); // PERMITE ACENTOS E CARACTERES ESPECIAIS
+    srand(time(NULL)); // ALEATORIZA RESULTADOS
 
-    int choice;
-    int choice2;
-    int battleChoice;
+    int introChoice;
+    int riverChoice;
     int heroLife = 20;
-    int knightLife = 15;
     int bossLife = 25;
     int scrollChoice;
 
-    // INÍCIO
+    // INTRODUÇÃO E PRIMEIRA ESCOLHA
+    introChoice = gameIntro(); // ARMAZENA A ESCOLHA DE gameIntro() E RODA A INTRODUÇÃO.
+
+    if (introChoice == 1) { //SE A ESCOLHA FOR 1, RODA O CAMINHO DAS PEGADAS.
+        riverChoice = footPrintChoice(); // RIVERCHOICE É O RETORNO DA FUNÇÃO FOOTPRINTCHOICE()
+
+        if (riverChoice == 1) { // SE ESCOLHER CONTINUAR SEGUINDO RIO
+            followRiver(&heroLife); // RODA CENA DO RIO
+                                    // RODA BATALHA
+        } else if (riverChoice == 2) { // SE ESCOLHER VOLTAR DO RIO PRA CLAREIRA;
+            clearingChoice();
+        } else { // SE DIGITAR UM COMANDO INVÁLIDO MORRE
+            anxietyFinal();
+        }
+    } else if (introChoice == 2) { //SE A ESCOLHA FOR 2, RODA O CAMINHO DA CLAREIRA
+        clearingChoice(); 
+    } else { // SE A ESCOLHA NÃO FOR NENHUMA DAS DUAS, RODA O FINAL CRISE DE ANSIEDADE
+        anxietyFinal();
+    }
+
+    return 0;
+}
+
+// _________________________________________ FUNÇÕES DO JOGO:___________________________________________________
+
+//FUNÇÃO DA INTRODUÇÃO
+int gameIntro() {
+    int introChoice;
 
     printf("\n\n\n\n\n\n\n\nAS AVENTURAS DE CHESCO\n\n\n\n\n\n\n\n\n\n");
     system("pause");
@@ -44,237 +79,232 @@ int main() {
     system("pause");
     system("cls");
 
+    //PRIMEIRA ESCOLHA
     printf("\n\n\n\nO que você faz?\n\n\n\n\n\n");
     printf("Digite 1 para seguir a trilha das pegadas\n\n");
     printf("Digite 2 para seguir em direção a clareira\n\n");
+    scanf("%d", &introChoice);
 
-    scanf("%d", &choice);
+    return introChoice;
+}
 
-    // CAMINHO DAS PEGADAS PARTE 1
+int footPrintChoice() { // FUNÇÃO DO CAMINHO DAS PEGADAS
+    int riverChoice;
 
-    if (choice == 1) {
+    system("cls");
+    printf("\n\n\n\nVocê sente que seguir as pegadas irão te levar mais perto de descobrir a verdade\n\n");
+    printf("\n\nVocê vai pela DIREITA\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+        
+    printf("\n\n\n\nAdentrando pela floresta, você tem a sensação de estar sendo observado.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nVocê percebe que a trilha de pegadas leva até um córrego, onde somem ao adentrar na água.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");  
+    printf("\n\n\n\nDe repente, você escuta algo...\n\n\n\n");
+    printf("Algo grotesco, um urro que quebra o silêncio da noite e arrepia todos os pelos do seu corpo.\n\n");
+    printf("Aparentemente vem de onde ficaria a clareira.\n\n\n\n\n\n\n\n\n\n");
+
+    system("pause");
+    system("cls");
+
+    printf("\n\n\n\nO que você faz?\n\n");
+    printf("1. Seguir o rio\n\n");
+    printf("2. Voltar para a clareira\n\n");
+    scanf("%d", &riverChoice);
+
+    return riverChoice;
+}
+
+void followRiver(int *heroLife) { //    ESCOLHA DO RIO COM PONTEIROS PARA A VIDA DO HERÓI
+                                 // SERÁ USADA PARA BATALHA
+    int knightLife = 15; // DECLARAÇÃO DA VIDA DO INIMIGO DENTRO DO ESCOPO EM QUE A FUNÇÃO DE BATALHA É CHAMADA
+    int battleResult;
+    int scrollChoice;
+
+    // ROTEIRO ESCOLHA DO RIO
+    system("cls");
+    printf("\n\n\n\nVocê é esperto e prefere ficar seguro.\n\n");
+    printf("Portanto, escolhe continuar seguindo o rio.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+
+    printf("\n\n\n\nDepois de alguns minutos caminhando, algo lhe chama atenção...\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("Uma trilha de sangue, aparentemente fresca, leva até uma árvore na encosta do córrego\n\n");
+    printf("Ao se aproximar você identifica um pergaminho caído no chão com algumas marcas de sangue.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+
+    printf("\n\n\n\nQuando você se abaixa para pega-lo, algo passa, cortando o vento, rente ao seu rosto.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nVocê esteve em batalhas suficientes para identificar o som de uma espada.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+
+    printf("\n\n\n\nQuando você se vira, um humanóide alto, com cheiro de sangue, se encontra à sua frente...\n\n\n\n\n\n\n\n\n\n");
+    printf("\n\n\n\nA escuridão da noite impede que você veja seu rosto.\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nSem que antes você possa dizer uma palavra, ele brada novamente sua espada e você precisa\nse preparar para agir\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nVOCÊ NÃO TEM ESCOLHA!\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nO monstro se aproxima...\n\n\n\n");
+
+    battleData(heroLife, &knightLife);
+
+    battleResult = endBattle(heroLife);
+
+    printf("\n\n\n\nAo decrescer do fervor da batalha, você se lembra do pergaminho ensanguentado\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+
+    printf("\n\n\n\nLer pergaminho?\n\n\n\n");
+    printf("1. Sim\n\n");
+    printf("2. Não\n\n");
+    scanf("%d", &scrollChoice);
+    system("cls");
+
+    if (scrollChoice == 1) { //CASO ESCOLHA LER O PERGAMINHO
+        printf("\n\n\n\nAo terminar de ler, voce percebe que o pergaminho é, na verdade, uma carta oficial do rei...\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
         system("cls");
-        printf("\n\n\n\nVocê sente que seguir as pegadas irão te levar mais perto de descobrir a verdade\n\n");
-        printf("\n\nVocê vai pela DIREITA\n\n\n\n\n\n\n\n\n\n");
+        printf("\n\n\n\nSeu conteúdo é assustadoramente familiar. O rei pediu ao destinatário para investigar os desaparecimentos\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+
+        printf("\n\n\n\nNeste momento, uma voz e rouca te chama da escuridão\n\n\n\n\n\n\n\n\n\n");
         system("pause");
         system("cls");
         
-        printf("\n\n\n\nAdentrando pela floresta, você tem a sensação de estar sendo observado.\n\n\n\n\n\n\n\n\n\n");
-        system("pause");
-        system("cls");
-        printf("\n\n\n\nVocê percebe que a trilha de pegadas leva até um córrego, onde somem ao adentrar na água.\n\n\n\n\n\n\n\n\n\n");
+        printf("Ao relampejo da lua cheia, você finalmente pode ver a face de seu inimigo\n\n\n\n\n\n\n\n\n\n");
         system("pause");
         system("cls");
 
-        printf("\n\n\n\nDe repente, você escuta algo...\n\n\n\n");
-        printf("Algo grotesco, um urro que quebra o silêncio da noite e arrepia todos os pelos do seu corpo.\n\n");
-        printf("Aparentemente vem de onde ficaria a clareira.\n\n\n\n\n\n\n\n\n\n");
-
+        printf("Você então percebe que o humanóide a sua frente não é nada mais do que outro herói.\n\n\n\n\n\n\n\n\n\n");
         system("pause");
         system("cls");
 
-        printf("\n\n\n\nDigite 1 para seguir o córrego\n\n");
-        printf("Digite 2 para voltar e seguir para clareira\n\n");
-        scanf("%d", &choice2);
-        system("cls");
-
-        // CAMINHO DAS PEGADAS PARTE 2
-
-        if (choice2 == 1) {
-            printf("\n\n\n\nVocê é esperto e prefere ficar seguro.\n\n");
-            printf("Portanto, escolhe continuar seguindo o rio.\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-
-            printf("\n\n\n\nDepois de alguns minutos caminhando, algo lhe chama atenção...\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-            printf("Uma trilha de sangue, aparentemente fresca, leva até uma árvore na encosta do córrego\n\n");
-            printf("Ao se aproximar você identifica um pergaminho caído no chão com algumas marcas de sangue.\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-
-            printf("\n\n\n\nQuando você se abaixa para pega-lo, algo passa, cortando o vento, rente ao seu rosto.\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-            printf("\n\n\n\nVocê esteve em batalhas suficientes para identificar o som de uma espada.\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-
-            printf("\n\n\n\nQuando você se vira, um humanóide alto, com cheiro de sangue, se encontra à sua frente...\n\n\n\n\n\n\n\n\n\n");
-            printf("\n\n\n\nA escuridão da noite impede que você veja seu rosto.\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-            printf("\n\n\n\nSem que antes você possa dizer uma palavra, ele brada novamente sua espada e você precisa\nse preparar para agir\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-            printf("\n\n\n\nVOCÊ NÃO TEM ESCOLHA!\n\n\n\n\n\n\n\n\n\n");
-            system("pause");
-            system("cls");
-            printf("\n\n\n\nO monstro se aproxima...\n\n\n\n");
-
-            // CAMINHO DAS PEGADAS BATALHA
-
-            while (heroLife > 0 && knightLife > 0) { //LOOP DE BATALHA
-                
-                printf("\n\n\n\nO que você faz?\n\n");
-                
-                printf("\n\n\n\n1. Atacar\n\n");
-                printf("2. Defender\n\n");
-                scanf("%d", &battleChoice);
-
-                // LÓGICA CRÍTICO                
-                if (battleChoice == 1) {
-                    int criticalChance = rand() % 4;
-
-                    // IF ATACAR
-                    if (criticalChance == 0) { //CRÍTICO
-                        knightLife -= 5;
-                        system("cls");
-                        printf("ATAQUE CRÍTICO! Você causou 5 de dano!\n\n");
-                            if (knightLife > 0) {
-                                printf("\n\nA vida do monstro agora é de %d pontos.\n\n\n\n\n\n\n\n\n\n", knightLife);
-                                system("pause");
-                                system("cls");
-                            }
-                    } else { //ATAQUE NORMAL
-                        knightLife -= 2;
-                        system("cls");
-                        printf("\n\n\n\nVocê ataca o monstro e causa 2 de dano!\n\n");
-                        
-                            if (knightLife > 0) {  //SÓ MOSTRA O ATUAL HP DO MONSTRO SE ELE ESTIVER VIVO
-                                printf("\n\nA vida do monstro agora é de %d pontos.\n\n\n\n\n\n\n\n\n\n", knightLife);
-                                system("pause");
-                                system("cls");
-                            }
-                    }
-
-                    if(knightLife > 0) { //CONTRA ATAQUE EM CASO DE TER ESCOLHIDO ATACAR
-                            heroLife -= 3;
-                            printf("\n\n\n\nO monstro contra-ataca e você recebe 3 de dano\n\n");
-                            printf("\n\nSua vida diminui para %d pontos.\n\n\n\n\n\n\n\n\n\n", heroLife);
-                            system("pause");
-                            system("cls");
-                        }
-
-                // IF DEFENDER
-                } else if (battleChoice == 2) {
-                    heroLife -=1;
-                    printf("\n\n\n\nVocê se defende e se prepara para o ataque!\n\n");
-                        if(heroLife > 0) { //CASO NÃO MORRA
-                            printf("\n\nSua vida diminui para %d pontos.\n\n", heroLife);
-                            printf("\n\nO monstro ataca com a espada, mas você está pronto e recebe apenas 1 de dano.\n\n");
-                    } else { //CASO MORRA DEFENDENDO
-                        printf("\n\n\n\nApesar de ter se preparado, você é vencido pela fadiga...\n\n\n\n\n\n\n\n\n\n");
-                    }
-
-                    system("pause");
-                    system("cls");
-                }
-            }
-
-            // CHESCO PERDE A BATALHA
-            if (heroLife <= 0) {
-                
-                system("cls");
-                printf("\n\n\n\nSua visão se escurece...\n\n\n\n\n\n\n\n\n\n");
-                system("pause");
-                system("cls");
-
-                printf("\n\n\n\nVocê perde a batalha e morre sozinho na escuridão da floresta\n\n\n\n\n\n\n\n\n\n");
-
-                system("pause");
-                system("cls");
-
-                printf("\n\n\n\nFIM DE JOGO\n\n\n\n\n\n\n\n\n\n");
-                system("pause");
-                
-            } else if (heroLife > 0) { // CHESCO VENCE A BATALHA
-                system("cls");
-                printf("\n\n\n\nArfando em fúria, você desfere o golpe final\n\n");
-                printf("Você é o vencedor!\n\n\n\n\n\n\n\n\n\n");
-                system("pause");
-                system("cls");
-
-
-                // CONTINUAÇÃO
-
-                printf("\n\n\n\nAo decrescer do fervor da batalha, você se lembra do pergaminho ensanguentado\n\n\n\n\n\n\n\n\n\n");
-                system("pause");
-                system("cls");
-
-                printf("\n\n\n\nLer pergaminho?\n\n\n\n");
-                printf("1. Sim\n\n");
-                printf("2. Não\n\n");
-                scanf("%d", &scrollChoice);
-                system("cls");
-
-                if (scrollChoice == 1) { //CASO ESCOLHA LER O PERGAMINHO
-                    printf("\n\n\n\nAo terminar de ler, voce percebe que o pergaminho é, na verdade, uma carta oficial do rei...\n\n\n\n\n\n\n\n\n\n");
-                    system("pause");
-                    system("cls");
-                    printf("\n\n\n\nSeu conteúdo é assustadoramente familiar. O rei pediu ao destinatário para investigar os desaparecimentos\n\n\n\n\n\n\n\n\n\n");
-                    system("pause");
-                    system("cls");
-
-                    printf("\n\n\n\nNeste momento, uma voz e rouca te chama da escuridão\n\n\n\n\n\n\n\n\n\n")/
-                    system("pause");
-                    system("cls");
-                    
-                    printf("Ao relampejo da lua cheia, você finalmente pode ver a face de seu inimigo\n\n\n\n\n\n\n\n\n\n");
-                    system("pause");
-                    system("cls");
-
-                    printf("Você então percebe que o humanóide a sua frente não é nada mais do que outro herói.\n\n\n\n\n\n\n\n\n\n");
-                    system("pause");
-                    system("cls");
-
-                    printf("Exatamente como você...");
-
-
-
-
-
-                }
-
-
-            }
-
-        }
-
-    // CAMINHO DA CLAREIRA PARTE 1
-
-    } else if (choice == 2) {   
-
-        system("cls");
-        printf("\n\n\n\nVocê sente que pode obter mais respostas seguindo aquele brilho distante\n\n");
-        printf("Você decide ir pela ESQUERDA\n\n\n\n\n\n\n\n\n\n");
-        system("pause");
-        system("cls");
-
+        printf("Exatamente como você...");
     } else {
-
-        // FINAL CRISE DE ANSIEDADE
-
-        system("cls");
-        printf("\n\n\n\nESCOLHA INVÁLIDA\n\n\n\n\n\n\n\n\n\n");
-        system("pause");
-        system("cls");
-        printf("\n\n\n\nIncapaz de tomar a mais simples das decisões, você tem uma crise de ansiedade e cai no chão\n\n\n\n\n\n\n\n\n\n");
-        system("pause");
-        system("cls");
-        printf("Você morre afogado em lágrimas\n\n\n\n");
-        printf("\n\nFIM DE JOGO\n\n\n\n\n\n\n\n\n\n");
-        system("pause");
+        printf("\n\n\n\nVocê claramente não dá a mínima para algo que aparenta ser essencial para a resolução do mistério para o qual você foi contratado para resolver.\n Afinal, quem liga para a história em jogos de RPG?");
     }
-    
+}
 
+void clearingChoice() {   // FUNÇÃO DO CAMINHO DA CLAREIRA
+    system("cls");
+    printf("\n\n\n\nVocê sente que pode obter mais respostas seguindo aquele brilho distante\n\n");
+    printf("Você decide ir pela ESQUERDA\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+}
 
+void anxietyFinal() { // FINAL CRISE DE ANSIEDADE
+    system("cls");
+    printf("\n\n\n\nESCOLHA INVÁLIDA\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nIncapaz de tomar a mais simples das decisões, você tem uma crise de ansiedade e cai no chão\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+    printf("\n\n\n\nVocê morre afogado em lágrimas\n\n\n\n");
+    printf("\n\nFIM DE JOGO\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+}
 
+void battleData(int *heroLife, int *enemyLife) { // MECANICA DE BATALHA
+    int battleChoice;
 
+    while (*heroLife > 0 && *enemyLife > 0) { //LOOP DE BATALHA
+        printf("\n\n\n\nO que você faz?\n\n");
+        
+        printf("\n\n\n\n1. Atacar\n\n");
+        printf("2. Defender\n\n");
+        scanf("%d", &battleChoice);
 
+        // LÓGICA CRÍTICO                
+        if (battleChoice == 1) {
+            int criticalChance = rand() % 4; // 25% DE CHANCE DE CRITAR
 
+            // IF ATACAR
+            if (criticalChance == 0) { // SE CRÍTICO
+                *enemyLife -= 5;
+                system("cls");
+                printf("ATAQUE CRÍTICO! Você causou 5 de dano!\n\n");
+                if (*enemyLife > 0) {
+                    printf("\n\nA vida do monstro agora é de %d pontos.\n\n\n\n\n\n\n\n\n\n", *enemyLife);
+                    system("pause");
+                    system("cls");
+                }
+            } else { //SE ATAQUE NORMAL
+                *enemyLife -= 2;
+                system("cls");
+                printf("\n\n\n\nVocê ataca o monstro e causa 2 de dano!\n\n");
+                
+                if (*enemyLife > 0) {  //SÓ MOSTRA O ATUAL HP DO MONSTRO SE ELE ESTIVER VIVO
+                    printf("\n\nA vida do monstro agora é de %d pontos.\n\n\n\n\n\n\n\n\n\n", *enemyLife);
+                    system("pause");
+                    system("cls");
+                }
+            }
 
-    return 0;
+            if(*enemyLife > 0) { //CONTRA ATAQUE EM CASO DE TER ESCOLHIDO ATACAR
+                *heroLife -= 3;
+                printf("\n\n\n\nO monstro contra-ataca e você recebe 3 de dano\n\n");
+                printf("\n\nSua vida diminui para %d pontos.\n\n\n\n\n\n\n\n\n\n", *heroLife);
+                system("pause");
+                system("cls");
+            }
 
+            // IF DEFENDER
+        } else if (battleChoice == 2) {
+            *heroLife -=1;
+            printf("\n\n\n\nVocê se defende e se prepara para o ataque!\n\n");
+            if(*heroLife > 0) { //CASO NÃO MORRA
+                printf("\n\nSua vida diminui para %d pontos.\n\n", *heroLife);
+                printf("\n\nO monstro ataca com a espada, mas você está pronto e recebe apenas 1 de dano.\n\n");
+            } else { //CASO MORRA DEFENDENDO
+                printf("\n\n\n\nApesar de ter se preparado, você é vencido pela fadiga...\n\n\n\n\n\n\n\n\n\n");
+            }
+
+            system("pause");
+            system("cls");
+        }
+    }
+}
+
+int endBattle(int *heroLife) { // FUNÇÃO QUE VERIFICA SE CHESCO GANHOU A BATALHA
+    // CHESCO PERDE A BATALHA
+    if (*heroLife <= 0) {
+        system("cls");
+        printf("\n\n\n\nSua visão se escurece...\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+        
+        printf("\n\n\n\nVocê perde a batalha e morre sozinho na escuridão da floresta\n\n\n\n\n\n\n\n\n\n");
+        
+        system("pause");
+        system("cls");
+        
+        printf("\n\n\n\nFIM DE JOGO\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+
+        return 0;
+        
+    } else { // CHESCO VENCE A BATALHA
+        system("cls");
+        printf("\n\n\n\nArfando em fúria, você desfere o golpe final\n\n");
+        printf("Você é o vencedor!\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+
+        return 1;
+    }
 }
