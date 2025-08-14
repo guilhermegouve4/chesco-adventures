@@ -10,6 +10,7 @@ void anxietyFinal();
 void followRiver(int *heroLife);
 void battleData(int *heroLife, int *enemyLife);
 int endBattle(int *heroLife);
+void cantGoBack();
 
 int main() {
     setlocale(LC_ALL, "Portuguese"); // PERMITE ACENTOS E CARACTERES ESPECIAIS
@@ -31,7 +32,8 @@ int main() {
             followRiver(&heroLife); // RODA CENA DO RIO
                                     // RODA BATALHA
         } else if (riverChoice == 2) { // SE ESCOLHER VOLTAR DO RIO PRA CLAREIRA;
-            clearingChoice();
+            cantGoBack();
+
         } else { // SE DIGITAR UM COMANDO INVÁLIDO MORRE
             anxietyFinal();
         }
@@ -162,15 +164,18 @@ void followRiver(int *heroLife) { //    ESCOLHA DO RIO COM PONTEIROS PARA A VIDA
 
     battleResult = endBattle(heroLife);
 
-    printf("\n\n\n\nAo decrescer do fervor da batalha, você se lembra do pergaminho ensanguentado\n\n\n\n\n\n\n\n\n\n");
-    system("pause");
-    system("cls");
-
-    printf("\n\n\n\nLer pergaminho?\n\n\n\n");
-    printf("1. Sim\n\n");
-    printf("2. Não\n\n");
-    scanf("%d", &scrollChoice);
-    system("cls");
+    if(battleResult == 1) { // SÓ CONTINUA SE VENCEU A BATALHA
+        
+        printf("\n\n\n\nAo decrescer do fervor da batalha, você se lembra do pergaminho ensanguentado\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+        
+        printf("\n\n\n\nLer pergaminho?\n\n\n\n");
+        printf("1. Sim\n\n");
+        printf("2. Não\n\n");
+        scanf("%d", &scrollChoice);
+        system("cls");
+    }
 
     if (scrollChoice == 1) { //CASO ESCOLHA LER O PERGAMINHO
         printf("\n\n\n\nAo terminar de ler, voce percebe que o pergaminho é, na verdade, uma carta oficial do rei...\n\n\n\n\n\n\n\n\n\n");
@@ -193,9 +198,35 @@ void followRiver(int *heroLife) { //    ESCOLHA DO RIO COM PONTEIROS PARA A VIDA
         system("cls");
 
         printf("Exatamente como você...");
-    } else {
-        printf("\n\n\n\nVocê claramente não dá a mínima para algo que aparenta ser essencial para a resolução do mistério para o qual você foi contratado para resolver.\n Afinal, quem liga para a história em jogos de RPG?");
+    } else {    // CASO NÃO QUEIRA LER O PERGAMINHO
+        printf("\n\n\n\nVocê claramente não dá a mínima para algo que aparenta ser essencial na resolução do mistério para o qual você foi contratado para resolver.\n Afinal, quem liga para a história em jogos de RPG?\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+
+        printf("\n\n\n\nNeste momento, uma voz e rouca te chama da escuridão\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+        
+        printf("Ao relampejo da lua cheia, você finalmente pode ver a face de seu inimigo\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+
+        printf("Você então percebe que o humanóide a sua frente não é nada mais do que outro herói.\n\n\n\n\n\n\n\n\n\n");
+        system("pause");
+        system("cls");
+
     }
+}
+
+void cantGoBack() {
+
+    system("cls");
+    printf("\n\n\n\nVocê decide investigar o barulho\n\n\n\n\n\n\n\n\n\n");
+    system("pause");
+    system("cls");
+
+    printf("");
+
 }
 
 void clearingChoice() {   // FUNÇÃO DO CAMINHO DA CLAREIRA
@@ -252,6 +283,11 @@ void battleData(int *heroLife, int *enemyLife) { // MECANICA DE BATALHA
                     printf("\n\nA vida do monstro agora é de %d pontos.\n\n\n\n\n\n\n\n\n\n", *enemyLife);
                     system("pause");
                     system("cls");
+                } else {
+                    system("cls");
+                    print("\n\n\n\nEscolha inválida! Você hesita e o monstro aproveita para atacar.\n\n\n\n");
+                    heroLife -= 2;
+                    printf("\n\nSua vida diminui para %d pontos.", *heroLife);
                 }
             }
 
